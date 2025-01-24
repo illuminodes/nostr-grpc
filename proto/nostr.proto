@@ -1,0 +1,36 @@
+syntax = "proto3";
+package nostr;
+
+message Empty {}
+message LoginRole {
+    bool is_admin = 1;
+}
+message GrpcNostrNoteId {
+    string id = 1;
+}
+message GrpcNostrNoteTag {
+    repeated string tag = 1;
+}
+message GrpcNostrNote {
+    string content = 1;
+    uint32 kind = 2;
+    string pubkey = 3;
+    int64 created_at = 4;
+    repeated GrpcNostrNoteTag tags = 5;
+    string id = 6;
+    string sig = 7;
+}
+message GrpcNostrNoteList {
+    repeated GrpcNostrNote events = 1;
+}
+message Filter {
+    repeated string authors = 1;
+    repeated uint32 kinds = 2;
+    repeated string ids = 3;
+    uint32 since = 4;
+    uint32 until = 5;
+    uint32 limit = 6;
+}
+message FilterTag {
+    repeated string parameter = 1;
+}
