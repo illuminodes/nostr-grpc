@@ -2,6 +2,11 @@
 name = "nostr-grpc"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+description = "Nostr GRPC types"
+repository = "https://github.com/illuminodes/nostr-grpc"
+readme = "README.md"
+homepage = "https://github.com/illuminodes/nostr-grpc"
 
 [build-dependencies]
 tonic-build = "0.12.1"
