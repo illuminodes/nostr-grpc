@@ -48,14 +48,26 @@ pub struct GrpcNostrNote {
 }
 impl From<NostrNote> for GrpcNostrNote {
     fn from(note: NostrNote) -> Self {
+        println!("{:?}", note.tags);
         let tags = note
             .tags
             .0
             .iter()
             .map(|tag| GrpcNostrNoteTag {
-                tag: tag.tags.clone(),
+                tag: {
+                    let mut tags = vec![];
+                    match tag.tag_type {
+                        NostrTag::Pubkey => tags.push("p".to_string()),
+                        NostrTag::Parameterized => tags.push("d".to_string()),
+                        NostrTag::Event => tags.push("e".to_string()),
+                        NostrTag::Custom(custom) => tags.push(custom.to_string()),
+                    }
+                    tags.extend(tag.tags.clone());
+                    tags
+                },
             })
             .collect();
+        println!("{:?}", tags);
         GrpcNostrNote {
             content: note.content.clone(),
             kind: note.kind,
@@ -85,7 +97,7 @@ impl Into<NostrNote> for GrpcNostrNote {
                             }
                         }
                     },
-                    tags: tag.tag[..1].to_vec(),
+                    tags: tag.tag.iter().skip(1).map(|tag| tag.clone()).collect(),
                 };
                 Some(tag_list)
             })
