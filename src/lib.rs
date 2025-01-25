@@ -48,7 +48,6 @@ pub struct GrpcNostrNote {
 }
 impl From<NostrNote> for GrpcNostrNote {
     fn from(note: NostrNote) -> Self {
-        println!("{:?}", note.tags);
         let tags = note
             .tags
             .0
@@ -67,7 +66,6 @@ impl From<NostrNote> for GrpcNostrNote {
                 },
             })
             .collect();
-        println!("{:?}", tags);
         GrpcNostrNote {
             content: note.content.clone(),
             kind: note.kind,
